@@ -25,47 +25,37 @@ class MyScene extends THREE.Scene {
     
     // Se añade a la gui los controles para manipular los elementos de esta clase
     this.gui = this.createGUI ();
-    
-    this.initStats();
-    
+        
     // Construimos los distinos elementos que tendremos en la escena
     
     // Todo elemento que se desee sea tenido en cuenta en el renderizado de la escena debe pertenecer a esta. Bien como hijo de la escena (this en esta clase) o como hijo de un elemento que ya esté en la escena.
     // Tras crear cada elemento se añadirá a la escena con   this.add(variable)
-    this.createLights ();
     
     // Tendremos una cámara con un control de movimiento con el ratón
     this.createCamera ();
     
-    // Y unos ejes. Imprescindibles para orientarnos sobre dónde están las cosas
-    this.axis = new THREE.AxesHelper (5);
-    this.add (this.axis);
-    
+    this.createAxis();    
     
     // Por último creamos los modelos
     // El modelo puede incluir su parte de la interfaz gráfica de usuario. Le pasamos la referencia a 
     // la gui y el texto bajo el que se agruparán los controles de la interfaz que añada el modelo.
-    let caja = new Caja(this.gui, "Controles de la Caja");
+    let caja = new Caja(this.gui, "Dimensiones de la Caja");
+    caja.position.x = 8.0;
+
     this.objetos = [caja];
     for (let i = 0; i < this.objetos.length; i++) {
       this.add(this.objetos[i]);
     }
   }
   
-  initStats() {
-  
-    var stats = new Stats();
-    
-    stats.setMode(0); // 0: fps, 1: ms
-    
-    // Align top-left
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.left = '0px';
-    stats.domElement.style.top = '0px';
-    
-    $("#Stats-output").append( stats.domElement );
-    
-    this.stats = stats;
+  createAxis(){
+    // Ejes centrales, aunque luego cada objeto tendrá los suyos propios
+    let axis = new THREE.AxesHelper (5);
+    this.add (axis);
+
+    let axis_caja = new THREE.AxesHelper (5);
+    axis_caja.position.x = 8.0;
+    this.add(axis_caja);
   }
   
   createCamera () {
@@ -80,70 +70,12 @@ class MyScene extends THREE.Scene {
     var look = new THREE.Vector3 (0,0,0);
     this.camera.lookAt(look);
     this.add (this.camera);
-    
-    // Para el control de cámara usamos una clase que ya tiene implementado los movimientos de órbita
-    this.cameraControl = new TrackballControls (this.camera, this.renderer.domElement);
-    // Se configuran las velocidades de los movimientos
-    this.cameraControl.rotateSpeed = 5;
-    this.cameraControl.zoomSpeed = -2;
-    this.cameraControl.panSpeed = 0.5;
-    // Debe orbitar con respecto al punto de mira de la cámara
-    this.cameraControl.target = look;
   }
   
   createGUI () {
-    // Se crea la interfaz gráfica de usuario
+    // Se crea la interfaz gráfica de usuario, aunque no tiene opciones propias, solo se sumaran las de los objetos
     var gui = new GUI();
-    
-    // La escena le va a añadir sus propios controles. 
-    // Se definen mediante un objeto de control
-    // En este caso la intensidad de la luz y si se muestran o no los ejes
-    this.guiControls = {
-      // En el contexto de una función   this   alude a la función
-      lightIntensity : 0.5,
-      axisOnOff : true
-    }
-
-    // Se crea una sección para los controles de esta clase
-    var folder = gui.addFolder ('Luz y Ejes');
-    
-    // Se le añade un control para la intensidad de la luz
-    folder.add (this.guiControls, 'lightIntensity', 0, 1, 0.1)
-      .name('Intensidad de la Luz : ')
-      .onChange ( (value) => this.setLightIntensity (value) );
-    
-    // Y otro para mostrar u ocultar los ejes
-    folder.add (this.guiControls, 'axisOnOff')
-      .name ('Mostrar ejes : ')
-      .onChange ( (value) => this.setAxisVisible (value) );
-    
     return gui;
-  }
-  
-  createLights () {
-    // Se crea una luz ambiental, evita que se vean complentamente negras las zonas donde no incide de manera directa una fuente de luz
-    // La luz ambiental solo tiene un color y una intensidad
-    // Se declara como   var   y va a ser una variable local a este método
-    //    se hace así puesto que no va a ser accedida desde otros métodos
-    var ambientLight = new THREE.AmbientLight(0xccddee, 0.35);
-    // La añadimos a la escena
-    this.add (ambientLight);
-    
-    // Se crea una luz focal que va a ser la luz principal de la escena
-    // La luz focal, además tiene una posición, y un punto de mira
-    // Si no se le da punto de mira, apuntará al (0,0,0) en coordenadas del mundo
-    // En este caso se declara como   this.atributo   para que sea un atributo accesible desde otros métodos.
-    this.spotLight = new THREE.SpotLight( 0xffffff, this.guiControls.lightIntensity );
-    this.spotLight.position.set( 60, 60, 40 );
-    this.add (this.spotLight);
-  }
-  
-  setLightIntensity (valor) {
-    this.spotLight.intensity = valor;
-  }
-  
-  setAxisVisible (valor) {
-    this.axis.visible = valor;
   }
   
   createRenderer (myCanvas) {
@@ -188,15 +120,7 @@ class MyScene extends THREE.Scene {
   }
 
   update () {
-    
-    if (this.stats) this.stats.update();
-    
     // Se actualizan los elementos de la escena para cada frame
-    
-    // Se actualiza la posición de la cámara según su controlador
-    this.cameraControl.update();
-    
-    // Se actualiza el resto del modelo
 
     //Update de los objetos
     for (let i = 0; i < this.objetos.length; i++) {
