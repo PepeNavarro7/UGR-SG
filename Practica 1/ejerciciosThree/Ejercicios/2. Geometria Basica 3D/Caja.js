@@ -11,8 +11,8 @@ class Caja extends THREE.Object3D {
     // Un Mesh se compone de geometría y material
     let boxGeom = new THREE.BoxGeometry (1,1,1);
     // Como material se crea uno a partir de las normales
-    let boxMat = new THREE.MeshNormalMaterial();
-    boxMat.flatShading = false;
+    var boxMat = new THREE.MeshNormalMaterial();
+    
 
     // Ya podemos construir el Mesh
     let box = new THREE.Mesh (boxGeom, boxMat);
@@ -38,6 +38,10 @@ class Caja extends THREE.Object3D {
     folder.add (this.guiControls, 'sizeX', 0.1, 5.0, 0.1).name ('Tamaño X : ').listen();
     folder.add (this.guiControls, 'sizeY', 0.1, 5.0, 0.1).name ('Tamaño Y : ').listen();
     folder.add (this.guiControls, 'sizeZ', 0.1, 5.0, 0.1).name ('Tamaño Z : ').listen();
+  }
+
+  setSombreadoPlano (valor) {
+    //
   }
   
   update () {

@@ -9,6 +9,7 @@ import { Stats } from '../../libs/stats.module.js'
 // Clases de mi proyecto
 
 import { Caja } from './Caja.js'
+import { Cono } from './Cono.js'
 
  
 /// La clase fachada del modelo
@@ -31,7 +32,7 @@ class MyScene extends THREE.Scene {
     // Todo elemento que se desee sea tenido en cuenta en el renderizado de la escena debe pertenecer a esta. Bien como hijo de la escena (this en esta clase) o como hijo de un elemento que ya esté en la escena.
     // Tras crear cada elemento se añadirá a la escena con   this.add(variable)
     
-    // Tendremos una cámara con un control de movimiento con el ratón
+    // Tendremos una cámara
     this.createCamera ();
     
     this.createAxis();    
@@ -42,7 +43,11 @@ class MyScene extends THREE.Scene {
     let caja = new Caja(this.gui, "Dimensiones de la Caja");
     caja.position.x = 8.0;
 
-    this.objetos = [caja];
+    let cono = new Cono(this.gui, "Dimensiones del Cono");
+    cono.position.x = 8.0;
+    cono.position.y = 8.0;
+
+    this.objetos = [caja, cono];
     for (let i = 0; i < this.objetos.length; i++) {
       this.add(this.objetos[i]);
     }
@@ -56,6 +61,11 @@ class MyScene extends THREE.Scene {
     let axis_caja = new THREE.AxesHelper (5);
     axis_caja.position.x = 8.0;
     this.add(axis_caja);
+
+    let axis_cono = new THREE.AxesHelper (5);
+    axis_cono.position.x = 8.0;
+    axis_cono.position.y = 8.0
+    this.add(axis_cono);
   }
   
   createCamera () {
@@ -75,7 +85,22 @@ class MyScene extends THREE.Scene {
   createGUI () {
     // Se crea la interfaz gráfica de usuario, aunque no tiene opciones propias, solo se sumaran las de los objetos
     var gui = new GUI();
+    this.guiControls ={
+      plano :false
+    }
+
+    var folder = gui.addFolder("Luz y Ejes")
+    folder.add (this.guiControls, 'plano')
+      .name ('Sombreado plano : ')
+      .onChange ( (value) => this.setSombreadoPlano (value) );
+    
     return gui;
+  }
+
+  setSombreadoPlano (valor) {
+    for (let i = 0; i < this.objetos.length; i++) {
+      this.objetos[i].setSombreadoPlano(valor)
+    }
   }
   
   createRenderer (myCanvas) {
