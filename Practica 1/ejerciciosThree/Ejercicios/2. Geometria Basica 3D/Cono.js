@@ -9,12 +9,12 @@ class Cono extends THREE.Object3D {
     this.createGUI(gui,titleGui);
     
     // Un Mesh se compone de geometría y material
-    this.geometry = new THREE.ConeGeometry(1,1,3); //radio, altura y divisiones
+    let geometry = new THREE.ConeGeometry(1,1,3); //radio, altura y divisiones
     // Como material se crea uno a partir de las normales
-    this.material = new THREE.MeshNormalMaterial();
+    let material = new THREE.MeshNormalMaterial();
 
     // Ya podemos construir el Mesh
-    this.modelo = new THREE.Mesh (this.geometry, this.material);
+    this.modelo = new THREE.Mesh (geometry, material);
     // Y añadirlo como hijo del Object3D (el this)
     this.add (this.modelo);
 
@@ -48,11 +48,10 @@ class Cono extends THREE.Object3D {
       this.radio = this.guiControls.radio;
       this.altura = this.guiControls.altura;
       this.resolucion = this.guiControls.resolucion;
-      this.geometry.dispose(); // esto parece que no funciona
-      this.remove(this.modelo); // esto elimina el modelo de la escena
-      this.geometry = new THREE.ConeGeometry(this.radio,this.altura,this.resolucion);
-      this.modelo = new THREE.Mesh (this.geometry, this.material);
-      this.add(this.modelo);
+      this.modelo.geometry.dispose(); 
+      /* esto me dijo el profe, accedo al atributo "geometry" del modelo, lo borro con dispose,
+       y creo uno nuevo, sin tocar el modelo per se */
+      this.modelo.geometry = new THREE.ConeGeometry(this.radio,this.altura,this.resolucion);
     }
   }
 }
