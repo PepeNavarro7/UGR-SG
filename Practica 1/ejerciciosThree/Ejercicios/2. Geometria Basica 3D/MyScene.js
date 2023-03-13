@@ -12,6 +12,7 @@ import { Caja } from './Caja.js'
 import { Cono } from './Cono.js'
 import { Cilindro } from './Cilindro.js'
 import { Esfera } from './Esfera.js'
+import { Toro } from './Toro.js'
 
  
 /// La clase fachada del modelo
@@ -50,15 +51,16 @@ class MyScene extends THREE.Scene {
     cono.position.y = 8.0;
 
     let cilindro = new Cilindro(this.gui, "Dimensiones del Cilindro");
-    cilindro.position.x = -4.0;
     cilindro.position.y = 8.0;
 
     let esfera = new Esfera(this.gui, "Dimensión de la Esfera");
-    esfera.position.x = -16.0;
     esfera.position.y = 8.0;
-    esfera.position.z = 4.0;
+    esfera.position.z = 8.0;
 
-    this.objetos = [caja, cono, cilindro, esfera];
+    let toro = new Toro(this.gui, "Dimensiones del toro");
+    toro.position.z = 8.0;
+
+    this.objetos = [caja, cono, cilindro, esfera, toro];
     for (let i = 0; i < this.objetos.length; i++) {
       this.add(this.objetos[i]);
     }
@@ -67,7 +69,6 @@ class MyScene extends THREE.Scene {
   createAxis(){
     // Ejes centrales, aunque luego cada objeto tendrá los suyos propios
     let axis = new THREE.AxesHelper (5);
-    axis.position.x = -4.0;
 
     let axis_caja = new THREE.AxesHelper (5);
     axis_caja.position.x = 8.0;
@@ -77,15 +78,16 @@ class MyScene extends THREE.Scene {
     axis_cono.position.y = 8.0
 
     let axis_cilindro = new THREE.AxesHelper (5);
-    axis_cilindro.position.x = -4.0;
     axis_cilindro.position.y = 8.0
 
     let axis_esfera = new THREE.AxesHelper (5);
-    axis_esfera.position.x = -16.0;
     axis_esfera.position.y = 8.0;
-    axis_esfera.position.z = 4.0;
+    axis_esfera.position.z = 8.0;
 
-    let arr_axis = [axis, axis_caja, axis_cono, axis_cilindro, axis_esfera];
+    let axis_toro = new THREE.AxesHelper (5);
+    axis_toro.position.z = 8.0;
+
+    let arr_axis = [axis, axis_caja, axis_cono, axis_cilindro, axis_esfera, axis_toro];
     for (let i = 0; i < arr_axis.length; i++) {
       this.add(arr_axis[i]);
     }
