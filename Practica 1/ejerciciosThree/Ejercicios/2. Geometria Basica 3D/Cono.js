@@ -38,7 +38,7 @@ class Cono extends THREE.Object3D {
     // El método   listen()   permite que si se cambia el valor de la variable en código, el deslizador de la interfaz se actualice
     folder.add (this.guiControls, 'radio', 0.1, 5.0, 0.1).name ('Radio: ').listen();
     folder.add (this.guiControls, 'altura', 0.1, 5.0, 0.1).name ('Altura: ').listen();
-    folder.add (this.guiControls, 'resolucion', 3, 10, 1).name ('Resolucion: ').listen();
+    folder.add (this.guiControls, 'resolucion', 3, 12, 1).name ('Resolucion: ').listen();
   }
   
   update () {
