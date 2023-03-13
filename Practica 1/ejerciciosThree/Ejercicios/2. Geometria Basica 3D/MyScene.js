@@ -13,6 +13,7 @@ import { Cono } from './Cono.js'
 import { Cilindro } from './Cilindro.js'
 import { Esfera } from './Esfera.js'
 import { Toro } from './Toro.js'
+import { Icosaedro } from './Icosaedro.js'
 
  
 /// La clase fachada del modelo
@@ -60,7 +61,10 @@ class MyScene extends THREE.Scene {
     let toro = new Toro(this.gui, "Dimensiones del toro");
     toro.position.z = 8.0;
 
-    this.objetos = [caja, cono, cilindro, esfera, toro];
+    let icosaedro = new Icosaedro(this.gui, "Configuracion del icosaedro");
+    icosaedro.position.y = -8.0;
+
+    this.objetos = [caja, cono, cilindro, esfera, toro, icosaedro];
     for (let i = 0; i < this.objetos.length; i++) {
       this.add(this.objetos[i]);
     }
@@ -87,7 +91,10 @@ class MyScene extends THREE.Scene {
     let axis_toro = new THREE.AxesHelper (5);
     axis_toro.position.z = 8.0;
 
-    let arr_axis = [axis, axis_caja, axis_cono, axis_cilindro, axis_esfera, axis_toro];
+    let axis_icosaedro = new THREE.AxesHelper (5);
+    axis_icosaedro.position.y = -8.0;
+
+    let arr_axis = [axis, axis_caja, axis_cono, axis_cilindro, axis_esfera, axis_toro, axis_icosaedro];
     for (let i = 0; i < arr_axis.length; i++) {
       this.add(arr_axis[i]);
     }
