@@ -16,10 +16,11 @@ class Cilindro extends THREE.Object3D {
     // Un Mesh se compone de geometría y material
     let geometry = new THREE.CylinderGeometry(this.radio_sup,this.radio_inf,this.altura,this.resolucion); 
     // Como material se crea uno a partir de las normales
-    let material = new THREE.MeshNormalMaterial();
+    this.material = new THREE.MeshNormalMaterial();
+    this.material.flatShading = true;
 
     // Ya podemos construir el Mesh
-    this.modelo = new THREE.Mesh (geometry, material);
+    this.modelo = new THREE.Mesh (geometry, this.material);
     // Y añadirlo como hijo del Object3D (el this)
     this.add (this.modelo);
 
@@ -43,6 +44,11 @@ class Cilindro extends THREE.Object3D {
     folder.add (this.guiControls, 'radio_inf', 0.1, 5.0, 0.1).name ('Radio inferior: ').listen();
     folder.add (this.guiControls, 'altura', 0.1, 5.0, 0.1).name ('Altura: ').listen();
     folder.add (this.guiControls, 'resolucion', 3, 12, 1).name ('Resolucion: ').listen();
+  }
+
+  setSombreadoPlano (valor) {
+    this.material.flatShading = valor;
+    this.material.needsUpdate = true;
   }
   
   update () {

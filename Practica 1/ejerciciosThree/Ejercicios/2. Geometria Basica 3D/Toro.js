@@ -16,10 +16,11 @@ class Toro extends THREE.Object3D {
     // Un Mesh se compone de geometría y material
     let geometry = new THREE.TorusGeometry(this.radio_fuera,this.radio_tubo,this.res_tubo,this.res_circulo); 
     // Como material se crea uno a partir de las normales
-    let material = new THREE.MeshNormalMaterial();
+    this.material = new THREE.MeshNormalMaterial();
+    this.material.flatShading = true;
 
     // Ya podemos construir el Mesh
-    this.modelo = new THREE.Mesh (geometry, material);
+    this.modelo = new THREE.Mesh (geometry, this.material);
     // Y añadirlo como hijo del Object3D (el this)
     this.add (this.modelo);
 
@@ -43,6 +44,11 @@ class Toro extends THREE.Object3D {
     folder.add (this.guiControls, 'radio_tubo', 0.2, 1, 0.1).name ('Radio Tubo: ').listen();
     folder.add (this.guiControls, 'res_circulo', 3, 16, 1).name ('Resolucion Toro: ').listen();
     folder.add (this.guiControls, 'res_tubo', 3, 16, 1).name ('Resolucion Tubo: ').listen();
+  }
+
+  setSombreadoPlano (valor) {
+    this.material.flatShading = valor;
+    this.material.needsUpdate = true;
   }
   
   update () {

@@ -14,10 +14,11 @@ class Icosaedro extends THREE.Object3D {
     // Un Mesh se compone de geometría y material
     let geometry = new THREE.IcosahedronGeometry(this.radio,this.subdivision);
     // Como material se crea uno a partir de las normales
-    let material = new THREE.MeshNormalMaterial();
+    this.material = new THREE.MeshNormalMaterial();
+    this.material.flatShading = true;
 
     // Ya podemos construir el Mesh
-    this.modelo = new THREE.Mesh (geometry, material);
+    this.modelo = new THREE.Mesh (geometry, this.material);
     // Y añadirlo como hijo del Object3D (el this)
     this.add (this.modelo);
 
@@ -37,6 +38,11 @@ class Icosaedro extends THREE.Object3D {
     // El método   listen()   permite que si se cambia el valor de la variable en código, el deslizador de la interfaz se actualice
     folder.add (this.guiControls, 'radio', 1, 5, 0.1).name ('Radio: ').listen();
     folder.add (this.guiControls, 'subdivision', 0, 3, 1).name ('Subdivision: ').listen();
+  }
+  
+  setSombreadoPlano (valor) {
+    this.material.flatShading = valor;
+    this.material.needsUpdate = true;
   }
   
   update () {

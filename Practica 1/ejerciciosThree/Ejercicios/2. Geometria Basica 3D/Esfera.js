@@ -15,10 +15,11 @@ class Esfera extends THREE.Object3D {
     // Un Mesh se compone de geometría y material
     let geometry = new THREE.SphereGeometry(this.radio, this.res_ecuador, this.res_meridiano); 
     // Como material se crea uno a partir de las normales
-    let material = new THREE.MeshNormalMaterial();
+    this.material = new THREE.MeshNormalMaterial();
+    this.material.flatShading = true;
 
     // Ya podemos construir el Mesh
-    this.modelo = new THREE.Mesh (geometry, material);
+    this.modelo = new THREE.Mesh (geometry, this.material);
     // Y añadirlo como hijo del Object3D (el this)
     this.add (this.modelo);
 
@@ -40,6 +41,11 @@ class Esfera extends THREE.Object3D {
     folder.add (this.guiControls, 'radio', 1, 5, 0.1).name ('Radio: ').listen();
     folder.add (this.guiControls, 'res_ecuador', 3, 15, 1).name ('Resolucion ecuador: ').listen();
     folder.add (this.guiControls, 'res_meridiano', 2, 10, 1).name ('Resolucion meridiano: ').listen();
+  }
+
+  setSombreadoPlano (valor) {
+    this.material.flatShading = valor;
+    this.material.needsUpdate = true;
   }
   
   update () {

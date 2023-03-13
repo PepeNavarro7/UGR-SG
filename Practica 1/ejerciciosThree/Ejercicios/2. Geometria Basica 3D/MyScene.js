@@ -118,7 +118,7 @@ class MyScene extends THREE.Scene {
     // Se crea la interfaz gráfica de usuario, aunque no tiene opciones propias, solo se sumaran las de los objetos
     var gui = new GUI();
     this.guiControls ={
-      plano :false
+      plano :true,
     }
 
     var folder = gui.addFolder("Luz y Ejes")
@@ -129,11 +129,17 @@ class MyScene extends THREE.Scene {
     return gui;
   }
 
-  /*setSombreadoPlano (valor) {
-    for (let i = 0; i < this.objetos.length; i++) {
-      this.objetos[i].setSombreadoPlano(valor)
-    }
-  }*/
+  setSombreadoPlano (valor) {
+    /*for (let i = 0; i < this.objetos.length; i++) {
+      this.objetos[i].setSombreadoPlano(valor);
+    }*/
+    this.objetos[0].setSombreadoPlano(valor);
+    //this.objetos[1].setSombreadoPlano(valor);
+    this.objetos[2].setSombreadoPlano(valor);
+    this.objetos[3].setSombreadoPlano(valor);
+    this.objetos[4].setSombreadoPlano(valor);
+    this.objetos[5].setSombreadoPlano(valor);
+  }
   
   createRenderer (myCanvas) {
     // Se recibe el lienzo sobre el que se van a hacer los renderizados. Un div definido en el html.
