@@ -1,19 +1,19 @@
 import * as THREE from '../../libs/three.module.js'
  
-class Cono extends THREE.Object3D {
+class Esfera extends THREE.Object3D {
   constructor(gui,titleGui) { // referencia a la gui, y el titulo que tendra la seccion del modelo
     super();
 
     this.radio = 1.0;
-    this.altura = 1.0;
-    this.resolucion = 4;
+    this.res_ecuador = 3;
+    this.res_meridiano = 2;
     
     // Se crea la parte de la interfaz que corresponde al modelo
     // Se crea primero porque otros métodos usan las variables que se definen para la interfaz
     this.createGUI(gui,titleGui);
     
     // Un Mesh se compone de geometría y material
-    let geometry = new THREE.ConeGeometry(this.radio,this.altura,this.resolucion); 
+    let geometry = new THREE.SphereGeometry(this.radio, this.res_ecuador, this.res_meridiano); 
     // Como material se crea uno a partir de las normales
     let material = new THREE.MeshNormalMaterial();
 
@@ -29,32 +29,33 @@ class Cono extends THREE.Object3D {
     // Controles para el tamaño del modelo
     this.guiControls = {
       radio : 1.0,
-      altura : 1.0,
-      resolucion : 4,
+      res_ecuador : 3,
+      res_meridiano : 2,
     } 
     
     // Se crea una sección para los controles de la caja
     var folder = gui.addFolder (titleGui);
     // Las tres cifras indican un valor mínimo, un máximo y el incremento
     // El método   listen()   permite que si se cambia el valor de la variable en código, el deslizador de la interfaz se actualice
-    folder.add (this.guiControls, 'radio', 0.1, 5.0, 0.1).name ('Radio: ').listen();
-    folder.add (this.guiControls, 'altura', 0.1, 5.0, 0.1).name ('Altura: ').listen();
-    folder.add (this.guiControls, 'resolucion', 3, 12, 1).name ('Resolucion: ').listen();
+    folder.add (this.guiControls, 'radio', 1, 5, 0.1).name ('Radio: ').listen();
+    folder.add (this.guiControls, 'res_ecuador', 3, 15, 1).name ('Resolucion ecuador: ').listen();
+    folder.add (this.guiControls, 'res_meridiano', 2, 10, 1).name ('Resolucion meridiano: ').listen();
   }
   
   update () {
     this.rotacion+=0.01;
     this.rotation.set (this.rotacion,this.rotacion,this.rotacion);
-    if(this.guiControls.radio != this.radio || this.guiControls.altura != this.altura || this.guiControls.resolucion != this.resolucion){
+    if(this.guiControls.radio != this.radio || this.guiControls.res_ecuador != this.res_ecuador 
+      || this.guiControls.res_meridiano != this.res_meridiano){
       this.radio = this.guiControls.radio;
-      this.altura = this.guiControls.altura;
-      this.resolucion = this.guiControls.resolucion;
+      this.res_ecuador = this.guiControls.res_ecuador;
+      this.res_meridiano = this.guiControls.res_meridiano;
       this.modelo.geometry.dispose(); 
       /* esto me dijo el profe, accedo al atributo "geometry" del modelo, lo borro con dispose,
-       y creo uno nuevo, sin tocar el modelo per se */
-      this.modelo.geometry = new THREE.ConeGeometry(this.radio,this.altura,this.resolucion);
+       y creo uno nuevo, sin tocar el modelo per se, solo modificando el atributo */
+      this.modelo.geometry = new THREE.SphereGeometry(this.radio, this.res_ecuador, this.res_meridiano); 
     }
   }
 }
 
-export { Cono };
+export { Esfera };
