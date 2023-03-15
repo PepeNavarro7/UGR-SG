@@ -7,12 +7,13 @@ import { TrackballControls } from '../../libs/TrackballControls.js'
 import { Stats } from '../../libs/stats.module.js'
 
 // Clases de mi proyecto
-
 import { Revolucion } from './Revolucion.js'
+import { Linea } from './Linea.js'
  
-/// La clase fachada del modelo
 /**
- * Usaremos una clase derivada de la clase Scene de Three.js para llevar el control de la escena y de todo lo que ocurre en ella.
+ * La clase fachada del modelo
+ * Usaremos una clase derivada de la clase Scene de Three.js para llevar el control de la escena 
+ * y de todo lo que ocurre en ella.
  */
 
 class MyScene extends THREE.Scene {
@@ -29,8 +30,6 @@ class MyScene extends THREE.Scene {
         
     // Construimos los distinos elementos que tendremos en la escena
     
-    // Todo elemento que se desee sea tenido en cuenta en el renderizado de la escena debe pertenecer a esta. Bien como hijo de la escena (this en esta clase) o como hijo de un elemento que ya esté en la escena.
-    // Tras crear cada elemento se añadirá a la escena con   this.add(variable)
     //this.createLights ();
 
     // Tendremos una cámara
@@ -45,15 +44,21 @@ class MyScene extends THREE.Scene {
     // El modelo puede incluir su parte de la interfaz gráfica de usuario. Le pasamos la referencia a 
     // la gui y el texto bajo el que se agruparán los controles de la interfaz que añada el modelo.
     let revolucion = new Revolucion(this.gui, "Parametros Revolucion");
-    this.objetos = [revolucion];
-    for (let i = 0; i < this.objetos.length; i++) {
-      this.add(this.objetos[i]);
+    let linea = new Linea();
+    linea.position.x -= 8.0;
+    this.modelos = [revolucion,linea];
+    for (let i = 0; i < this.modelos.length; i++) {
+      this.modelos[i].position.y += 1.0;
+      this.add(this.modelos[i]);
     }
   }
   createAxis(){
     // Ejes centrales, aunque luego cada objeto tendrá los suyos propios
-    let axis = new THREE.AxesHelper (5);
-    this.add(axis);
+    let axis_i = new THREE.AxesHelper (5);
+    axis_i.position.x -= 8.0;
+    let axis_c = new THREE.AxesHelper (5);
+    this.add(axis_i); 
+    this.add(axis_c);
   }
 
   initStats() {
@@ -125,12 +130,15 @@ class MyScene extends THREE.Scene {
 
     var folder = gui.addFolder("Luz y Ejes")
     folder.add (this.guiControls, 'plano')
-      .name ('Sombreado plano: ');
-      //.onChange ( (value) => this.setSombreadoPlano (value) );
+      .name ('Sombreado plano: ')
+      .onChange ( (value) => this.setSombreadoPlano (value) );
     folder.add (this.guiControls, 'animacion')
       .name ('Animacion: ');
       //.onChange ( (value) => this.setSombreadoPlano (value) );
     return gui;
+  }
+  setSombreadoPlano (valor) {
+    this.modelos[0].setSombreadoPlano(valor);
   }
   createLights () {
     // Se crea una luz ambiental, evita que se vean complentamente negras las zonas donde no incide de manera directa una fuente de luz
@@ -200,8 +208,8 @@ class MyScene extends THREE.Scene {
     
     // Se actualiza el resto del modelo
     //Update de los objetos
-    for (let i = 0; i < this.objetos.length; i++) {
-      this.objetos[i].update();
+    for (let i = 0; i < this.modelos.length; i++) {
+      this.modelos[i].update();
     }
     
     // Le decimos al renderizador "visualiza la escena que te indico usando la cámara que te estoy pasando"

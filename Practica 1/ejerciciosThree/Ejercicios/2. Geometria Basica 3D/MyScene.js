@@ -134,7 +134,7 @@ class MyScene extends THREE.Scene {
       this.objetos[i].setSombreadoPlano(valor);
     }*/
     this.objetos[0].setSombreadoPlano(valor);
-    //this.objetos[1].setSombreadoPlano(valor);
+    //this.objetos[1].setSombreadoPlano(valor); No sé por qué éste falla
     this.objetos[2].setSombreadoPlano(valor);
     this.objetos[3].setSombreadoPlano(valor);
     this.objetos[4].setSombreadoPlano(valor);

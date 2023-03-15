@@ -8,38 +8,27 @@ class Revolucion extends THREE.Object3D {
     this.resolucion = 3;
     this.angulo = Math.PI / 4;
     // Puntos
-    this.points2 = [];
     let points3 = [];
     // Se añaden puntos al array mediante unas cuantas instrucciones como la siguiente
     // definimos el contorno a revolucionar
-    points3.push (new THREE.Vector3 (0.0, 5.0, 0));
-    points3.push (new THREE.Vector3 (2.5, 5.0, 0));
-    points3.push (new THREE.Vector3 (2.5, 0.0, 0));
     points3.push (new THREE.Vector3 (0.0, 0.0, 0));
-
-    this.points2.push (new THREE.Vector2 (0.0, 0.0));
-    this.points2.push (new THREE.Vector2 (2.5, 0.0));
-    this.points2.push (new THREE.Vector2 (2.5, 5.0));
-    this.points2.push (new THREE.Vector2 (0.0, 5.0));
-    
-    
-    
+    points3.push (new THREE.Vector3 (2.5, 0.0, 0));
+    points3.push (new THREE.Vector3 (2.5, 5.0, 0));
+    points3.push (new THREE.Vector3 (0.0, 5.0, 0));    
+    this.points = points3; // referencia para llamarlo desde fuera
 
     // LatheGeometry(points : Array, segments : Integer, phiStart : Float, phiLength : Float)
-    let geometry = new THREE.LatheGeometry(this.points2, this.resolucion, 0.0, this.angulo);
-    let material = new THREE.MeshNormalMaterial();
-    material.flatShading = true;
+    let geometry_c = new THREE.LatheGeometry(points3, this.resolucion, 0.0, 2.0*Math.PI);
+    let geometry = new THREE.LatheGeometry(points3, this.resolucion, 0.0, this.angulo);
+    this.material = new THREE.MeshNormalMaterial();
+    this.material.flatShading = true;
 
     // Para crear la figura por revolución
-    this.objeto_revolucion = new THREE.Mesh (geometry, material);
+    this.objeto_revolucion = new THREE.Mesh (geometry, this.material);
+    this.objeto_c = new THREE.Mesh(geometry_c,this.material);
+    this.objeto_c.position.x += 8.0;
     this.add(this.objeto_revolucion);
-    
-    // Para crear una línea visible, como en el vídeo
-    let lineGeometry = new THREE.BufferGeometry();
-    lineGeometry.setFromPoints (points3);
-    let contorno = new THREE.Line (lineGeometry, material);
-    contorno.position.z = 8.0;
-    this.add(contorno);
+    this.add(this.objeto_c);
   }
   
   createGUI (gui,titleGui) {
@@ -58,13 +47,20 @@ class Revolucion extends THREE.Object3D {
     folder.add (this.guiControls, 'resolucion', 3, 16, 1).name ('Resolución: ').listen();
     folder.add (this.guiControls, 'angulo', 0.0, max_c, 0.1).name ('Ángulo: ').listen();
   }
+
+  setSombreadoPlano (valor) {
+    this.material.flatShading = valor;
+    this.material.needsUpdate = true;
+  }
   
   update () {
     if(this.guiControls.resolucion != this.resolucion || this.guiControls.angulo != this.angulo){
       this.resolucion = this.guiControls.resolucion;
       this.angulo = this.guiControls.angulo;
       this.objeto_revolucion.geometry.dispose(); 
-      this.objeto_revolucion.geometry = new THREE.LatheGeometry(this.points2, this.resolucion, 0.0, this.angulo);
+      this.objeto_c.geometry.dispose();
+      this.objeto_revolucion.geometry = new THREE.LatheGeometry(this.points, this.resolucion, 0.0, this.angulo);
+      this.objeto_c.geometry = new THREE.LatheGeometry(this.points, this.resolucion, 0.0, 2.0*Math.PI);
     }
   }
 }
