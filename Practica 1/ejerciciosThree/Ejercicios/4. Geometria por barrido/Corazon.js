@@ -5,6 +5,7 @@ class Corazon extends THREE.Object3D {
     super();
 
     const heartShape = new THREE.Shape();
+    this.shape = heartShape;
 
     // He copiado la forma del corazón
 
@@ -36,6 +37,9 @@ class Corazon extends THREE.Object3D {
   }
   
   update () {}
+  getShape(){
+    return this.shape;
+  }
 }
 
 export { Corazon };

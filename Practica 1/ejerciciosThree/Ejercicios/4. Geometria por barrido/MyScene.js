@@ -9,6 +9,7 @@ import { Stats } from '../../libs/stats.module.js'
 // Clases de mi proyecto
 import { Diamante } from './Diamante.js'
 import { Corazon } from './Corazon.js'
+import { Columna } from './Columna.js'
 
 /**
  * La clase fachada del modelo
@@ -32,10 +33,12 @@ class MyScene extends THREE.Scene {
     //this.createAxis();    
     
     // Por último creamos los modelos
-    let diamante = new Diamante();
+    const diamante = new Diamante();
+    diamante.position.x-=8.0;
     const corazon = new Corazon();
     corazon.position.x += 8.0;
-    this.modelos = [diamante, corazon];
+    const columna = new Columna();
+    this.modelos = [diamante, corazon, columna];
     for (let i = 0; i < this.modelos.length; i++) {
       this.add(this.modelos[i]);
     }
