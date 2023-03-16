@@ -8,7 +8,8 @@ import { Stats } from '../../libs/stats.module.js'
 
 // Clases de mi proyecto
 import { Diamante } from './Diamante.js'
- 
+import { Corazon } from './Corazon.js'
+
 /**
  * La clase fachada del modelo
  * Usaremos una clase derivada de la clase Scene de Three.js para llevar el control de la escena 
@@ -32,7 +33,9 @@ class MyScene extends THREE.Scene {
     
     // Por último creamos los modelos
     let diamante = new Diamante();
-    this.modelos = [diamante];
+    const corazon = new Corazon();
+    corazon.position.x += 8.0;
+    this.modelos = [diamante, corazon];
     for (let i = 0; i < this.modelos.length; i++) {
       this.add(this.modelos[i]);
     }
