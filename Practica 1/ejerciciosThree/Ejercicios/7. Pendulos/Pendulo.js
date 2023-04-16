@@ -36,7 +36,6 @@ class Pendulo extends THREE.Object3D {
     this.add(modelo);
 
     // Referencias
-    this.objeto1 = modelo;
     this.cuboPeque2 = cuboPeque2;
     this.cuboGrande = cuboGrande;
   }
@@ -82,12 +81,9 @@ class Pendulo extends THREE.Object3D {
     this.animacion = valor;
   }
   update () {
-    if(this.animacion){
-      this.objeto.rotateY(0.01);
-    }
     const longitudRojo = this.guiControls1.longitud;
     const longitudAzul = this.guiControls2.longitud;
-    const giroPendulo1 = this.guiControls1.giro / 360.0 * 2.0 * Math.PI;
+    const giroPendulos = this.guiControls1.giro / 360.0 * 2.0 * Math.PI;
     const giroPendulo2 = this.guiControls2.giro / 360.0 * 2.0 * Math.PI;
     const descenso = 2.0 + longitudRojo * this.guiControls2.posicion / 100.0;
 
@@ -98,7 +94,7 @@ class Pendulo extends THREE.Object3D {
     this.objeto2.rotation.z = giroPendulo2;
     this.objeto2.position.y = -descenso;
 
-    this.rotation.z=giroPendulo1;
+    this.rotation.z=giroPendulos;
   }
 }
 
