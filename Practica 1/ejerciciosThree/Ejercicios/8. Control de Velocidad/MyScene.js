@@ -31,8 +31,8 @@ class MyScene extends THREE.Scene {
     this.createAxis();
     
     // Por último creamos los modelos
-    const pendulo = new Reloj(this.gui);
-    this.modelos = [pendulo];
+    const reloj = new Reloj(this.gui);
+    this.modelos = [reloj];
     for (let i = 0; i < this.modelos.length; i++) {
       this.add(this.modelos[i]);
     }
