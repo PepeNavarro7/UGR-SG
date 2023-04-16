@@ -1,6 +1,4 @@
 import * as THREE from '../../libs/three.module.js'
-import { CSG } from '../../libs/CSG-v2.js'
-//'../libs/CSG-v2.js'
  
 class Pendulo extends THREE.Object3D {
   constructor(gui) { // referencia a la gui, y el titulo que tendra la seccion de la caja
