@@ -7,8 +7,7 @@ class Corazon extends THREE.Object3D {
     const heartShape = new THREE.Shape();
     this.shape = heartShape;
 
-    // He copiado la forma del corazón
-
+    // He copiado la forma del corazón de la web de threejs
     heartShape.moveTo( 25, 25 );
     heartShape.bezierCurveTo( 25, 25, 20, 0, 0, 0 );
     heartShape.bezierCurveTo( - 30, 0, - 30, 35, - 30, 35 );
@@ -20,7 +19,9 @@ class Corazon extends THREE.Object3D {
     const extrudeSettings = { depth: 8, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 1, bevelThickness: 1 };
 
     const geometry = new THREE.ExtrudeGeometry( heartShape, extrudeSettings );
-    const material = new THREE.MeshNormalMaterial()
+    // Basic no tiene sombras
+    // Lambert, physical dependen de las luces
+    const material = new THREE.MeshPhysicalMaterial({color: 'red'});
     const mesh = new THREE.Mesh( geometry, material );
     /* 1. Los escalados, el orden de los distintos ejes no es importante
     2. Las rotaciones, primero sobre Z, luego sobre Y, por último sobre X

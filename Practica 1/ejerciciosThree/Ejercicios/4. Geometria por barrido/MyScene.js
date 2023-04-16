@@ -26,8 +26,8 @@ class MyScene extends THREE.Scene {
 
     // Construimos los distinos elementos que tendremos en la escena
     this.gui = this.createGUI ();
-    //this.initStats();
-    //this.createLights ();
+    this.initStats();
+    this.createLights ();
     this.createCamera ();
     //this.createGround ();
     //this.createAxis();    
@@ -42,6 +42,7 @@ class MyScene extends THREE.Scene {
     for (let i = 0; i < this.modelos.length; i++) {
       this.add(this.modelos[i]);
     }
+    this.animacion=true;
   }
 
   createAxis(){
@@ -113,13 +114,13 @@ class MyScene extends THREE.Scene {
     // Se crea la interfaz gráfica de usuario, aunque no tiene opciones propias, solo se sumaran las de los objetos
     var gui = new GUI();
     this.guiControls ={
-      animacion : false,
+      animacion : true,
     }
 
     var folder = gui.addFolder("Luz y Ejes")
     folder.add (this.guiControls, 'animacion')
-      .name ('Animacion: ');
-      //.onChange ( (value) => this.animacion (value) );
+      .name ('Animacion: ')
+      .onChange ( (value) => this.animacion=value );
     return gui;
   }
   setSombreadoPlano (valor) {
@@ -199,6 +200,11 @@ class MyScene extends THREE.Scene {
     
     // Le decimos al renderizador "visualiza la escena que te indico usando la cámara que te estoy pasando"
     this.renderer.render (this, this.getCamera());
+
+    if(this.animacion){
+      this.modelos[0].rotateY(0.01);
+      this.modelos[1].rotateY(0.01);
+    }
 
     // Este método debe ser llamado cada vez que queramos visualizar la escena de nuevo.
     // Literalmente le decimos al navegador: "La próxima vez que haya que refrescar la pantalla, llama al método que te indico".

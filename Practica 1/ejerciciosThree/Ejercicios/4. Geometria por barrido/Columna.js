@@ -6,15 +6,15 @@ class Columna extends THREE.Object3D {
     super();
     //Create a closed wavey loop
     const curve = new THREE.CatmullRomCurve3( [
-      new THREE.Vector3( 0, 0, 5 ),
-      new THREE.Vector3( 5, 5, 0 ),
-      new THREE.Vector3( 0, 10, -5 ),
-      new THREE.Vector3( -5, 15, 0 ),
-      new THREE.Vector3( 0, 20, 5 ),
-      new THREE.Vector3( 5, 25, 0 ),
-      new THREE.Vector3( 0, 30, -5 ),
-      new THREE.Vector3( -5, 35, 0 ),
-      new THREE.Vector3( 0, 40, 5)
+      new THREE.Vector3( 0, 0, 50 ),
+      new THREE.Vector3( 50, 50, 0 ),
+      new THREE.Vector3( 0, 100, -50 ),
+      new THREE.Vector3( -50, 150, 0 ),
+      new THREE.Vector3( 0, 200, 50 ),
+      new THREE.Vector3( 50, 250, 0 ),
+      new THREE.Vector3( 0, 300, -50 ),
+      new THREE.Vector3( -50, 350, 0 ),
+      new THREE.Vector3( 0, 400, 50)
     ] );
 
     const corazon = new Corazon();
