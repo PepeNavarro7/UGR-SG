@@ -32,16 +32,16 @@ class Reloj extends THREE.Object3D {
     this.add(modelo);
   }
   crearBola(){
-    this.angulo = 0.0;
-    const rojo = new THREE.MeshPhysicalMaterial({color: 'red'});
+    const rojo = new THREE.MeshPhongMaterial({color: 'red'});
     const geomEsfera = new THREE.SphereGeometry(1.0);
-    const bola = new THREE.Mesh(geomEsfera, rojo);
+    const esfera = new THREE.Mesh(geomEsfera, rojo);
+    esfera.position.x = 3.0; // Separamos la bola del eje, para poder girarla
     const modelo = new THREE.Object3D();
-    modelo.add(bola);
+    modelo.add(esfera);
     this.add(modelo);
-
+    
     //referencias
-    this.esfera = modelo;
+    this.modelo = modelo;
   }
   createGUI (gui) {
     this.guiControls = {
@@ -58,11 +58,8 @@ class Reloj extends THREE.Object3D {
   update () {
     const velocidad = this.guiControls.velocidad;
     const segundosTranscurridos = this.reloj.getDelta();
-    // marcas/s * s * º/marca * rad/º = rad
-    //this.angulo+= velocidad * segundosTranscurridos * (360.0/12) * (2 * Math.PI / 360.0);
-    this.angulo+=velocidad * segundosTranscurridos * Math.PI / 6;
-    this.esfera.position.x=3.0 * Math.cos(this.angulo);
-    this.esfera.position.z=3.0 * Math.sin(this.angulo);
+    // marcas/seg * seg * rad/marca
+    this.modelo.rotation.y += velocidad * segundosTranscurridos * Math.PI/6;
   }
 }
 
