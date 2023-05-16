@@ -7,7 +7,7 @@ import { TrackballControls } from '../libs/TrackballControls.js'
 import { Stats } from '../libs/stats.module.js'
 
 // Clases de mi proyecto
-import { Habitacion } from './Habitacion.js'
+import { Flexo } from './Flexo.js'
 
 class MyScene extends THREE.Scene {
   constructor (myCanvas) {
@@ -21,11 +21,12 @@ class MyScene extends THREE.Scene {
     this.initStats();
     this.createLights ();
     this.createCamera ();
+    //this.createGround ();
     this.createAxis();
     
     // Por último creamos los modelos
-    const habitacion = new Habitacion();
-    this.modelos = [habitacion];
+    const flexo = new Flexo();
+    this.modelos = [flexo];
     for (let i = 0; i < this.modelos.length; i++) {
       this.add(this.modelos[i]);
     }
@@ -69,7 +70,26 @@ class MyScene extends THREE.Scene {
     this.cameraControl.target = look;
   }
 
-  
+  createGround () {
+    // El suelo es un Mesh, necesita una geometría y un material.
+    
+    // La geometría es una caja con muy poca altura
+    var geometryGround = new THREE.BoxGeometry (50,0.2,50);
+    
+    // El material se hará con una textura de madera
+    var texture = new THREE.TextureLoader().load('../imgs/wood.jpg');
+    var materialGround = new THREE.MeshPhongMaterial ({map: texture});
+    
+    // Ya se puede construir el Mesh
+    var ground = new THREE.Mesh (geometryGround, materialGround);
+    
+    // Todas las figuras se crean centradas en el origen.
+    // El suelo lo bajamos la mitad de su altura para que el origen del mundo se quede en su lado superior
+    ground.position.y = -0.1;
+    
+    // Que no se nos olvide añadirlo a la escena, que en este caso es  this
+    this.add (ground);
+  }
   
   createGUI () {
     // Se crea la interfaz gráfica de usuario, aunque no tiene opciones propias, solo se sumaran las de los objetos

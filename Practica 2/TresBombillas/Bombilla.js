@@ -5,7 +5,7 @@ import * as TWEEN from '../libs/tween.esm.js'
 import { CSG } from '../libs/CSG-v2.js'
  
 class Bombilla extends THREE.Object3D {
- constructor(gui,titleGui) {
+ constructor() {
     super();
     
     ///////////////////////////////MATERIALES/////////////////////////////// 

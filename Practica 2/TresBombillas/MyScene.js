@@ -8,7 +8,7 @@ import { Stats } from '../libs/stats.module.js'
 
 // Clases de mi proyecto
 
-import { Bombilla } from './Bombilla.js'
+import { TresBombillas } from './TresBombillas.js'
 
  
 /// La clase fachada del modelo
@@ -44,7 +44,7 @@ class MyScene extends THREE.Scene {
     this.axis = new THREE.AxesHelper (5);
     this.add (this.axis);
     
-    this.objeto = new Bombilla(this.gui, "Controles del objeto");
+    this.objeto = new TresBombillas(this.gui, "Controles del objeto");
     this.add(this.objeto);
     
   }
