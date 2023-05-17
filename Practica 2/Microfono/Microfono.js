@@ -10,6 +10,7 @@ class Microfono extends THREE.Object3D {
 
     this.pie();
     this.micro();
+    this.animacion();
   }
 
   pie(){
@@ -24,12 +25,15 @@ class Microfono extends THREE.Object3D {
     pieAbajo.position.y=0.2;
 
     const pieArriba = new THREE.Mesh(cilindroGeom,new THREE.MeshPhongMaterial({color: 'blue'}));
-    // aqui iria el scale en Y
+    //  <-Aqui iría el scale en Y
     pieArriba.position.y=5.2;
 
     const estructura = new THREE.Object3D().add(pieAbajo).add(pieArriba).add(caja);
 
     this.add(estructura);
+
+    // Refetencia para la animacion
+    this.pieScale = pieArriba;
   }
 
   micro(){
@@ -49,11 +53,38 @@ class Microfono extends THREE.Object3D {
 
     const estructura = new THREE.Object3D().add(resultadoCSG);
     // Aqui iria la rotacion en y
-    estructura.position.y=10.2; // se subirá 5.2 + [0,5] en funcion del escalado del pie
+    estructura.position.y=10.2; // En la animacion reescribimos esta línea
     this.add(estructura);
+
+    this.microfono = estructura;
+  }
+
+  animacion(){
+    var origen = { t: 1.0};
+    var fin = {t: 0.0};
+    const tiempoDeRecorrido=2000;
+
+    var animacion1 = new TWEEN.Tween (origen).to (fin, tiempoDeRecorrido)
+      .onUpdate(() => { 
+        this.pieScale.scale.y = origen.t;  // El pie se achica
+        this.microfono.position.y = 5.2 + 5.0*origen.t; // Y por tanto el micro cambia su altura
+        this.microfono.rotateY(0.01);
+      })
+      .onComplete(() => { origen.t = 1.0; }).start();
+
+    var animacion2 = new TWEEN.Tween (fin).to (origen, tiempoDeRecorrido)
+      .onUpdate(() => {
+        this.pieScale.scale.y = fin.t;  // El pie se agranda
+        this.microfono.position.y = 5.2 + 5.0*fin.t; // Y el micro sube
+        this.microfono.rotateY(0.01);
+      }) 
+      .onComplete(() => { fin.t = 0.0; });
+    animacion1.chain(animacion2);
+    animacion2.chain(animacion1);
   }
 
   update () {
+    TWEEN.update();
   }
 }
 
