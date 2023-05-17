@@ -8,9 +8,10 @@ class Microfono extends THREE.Object3D {
     this.materialNormal = new THREE.MeshNormalMaterial();
     this.materialNormal.flatShading = true;
 
-    this.pie();
-    this.micro();
-    this.animacion();
+    this.pie(); // constructor del pie
+    this.micro(); // constructor del micro
+    this.animacion(); // metodo que aloja la animacion del pie
+    this.estirado = true;
   }
 
   pie(){
@@ -25,7 +26,7 @@ class Microfono extends THREE.Object3D {
     pieAbajo.position.y=0.2;
 
     const pieArriba = new THREE.Mesh(cilindroGeom,new THREE.MeshPhongMaterial({color: 'blue'}));
-    //  <-Aqui iría el scale en Y
+    // <- En este paso se escalará el pie en Y
     pieArriba.position.y=5.2;
 
     const estructura = new THREE.Object3D().add(pieAbajo).add(pieArriba).add(caja);
@@ -52,7 +53,7 @@ class Microfono extends THREE.Object3D {
     resultadoCSG.position.set(-0.1,0.45,0);
 
     const estructura = new THREE.Object3D().add(resultadoCSG);
-    // Aqui iria la rotacion en y
+    // <- Aqui iria la rotacion en y
     estructura.position.y=10.2; // En la animacion reescribimos esta línea
     this.add(estructura);
 
@@ -60,27 +61,32 @@ class Microfono extends THREE.Object3D {
   }
 
   animacion(){
-    var origen = { t: 1.0};
-    var fin = {t: 0.0};
+    const origen = { t: 1.0};
+    const fin = {t: 0.0};
     const tiempoDeRecorrido=2000;
 
-    var animacion1 = new TWEEN.Tween (origen).to (fin, tiempoDeRecorrido)
+    this.animacion1 = new TWEEN.Tween (origen).to (fin, tiempoDeRecorrido)
       .onUpdate(() => { 
         this.pieScale.scale.y = origen.t;  // El pie se achica
         this.microfono.position.y = 5.2 + 5.0*origen.t; // Y por tanto el micro cambia su altura
-        this.microfono.rotateY(0.01);
       })
-      .onComplete(() => { origen.t = 1.0; }).start();
+      .onComplete(() => { origen.t = 1.0; });
 
-    var animacion2 = new TWEEN.Tween (fin).to (origen, tiempoDeRecorrido)
+    this.animacion2 = new TWEEN.Tween (fin).to (origen, tiempoDeRecorrido)
       .onUpdate(() => {
         this.pieScale.scale.y = fin.t;  // El pie se agranda
         this.microfono.position.y = 5.2 + 5.0*fin.t; // Y el micro sube
-        this.microfono.rotateY(0.01);
       }) 
       .onComplete(() => { fin.t = 0.0; });
-    animacion1.chain(animacion2);
-    animacion2.chain(animacion1);
+  }
+  anima(){
+    if(this.estirado){
+      this.estirado = false;
+      this.animacion1.start();
+    } else {
+      this.estirado = true;
+      this.animacion2.start();
+    }
   }
 
   update () {
