@@ -5,8 +5,6 @@ import { CSG } from '../libs/CSG-v2.js'
 class Flexo extends THREE.Object3D {
   constructor() { 
     super();
-    this.materialNormal = new THREE.MeshNormalMaterial();
-    this.materialNormal.flatShading = true;
     
     this.mat_marron_madera = new THREE.MeshPhongMaterial({color: 0xC19A6B });
 

@@ -5,9 +5,6 @@ import { CSG } from '../libs/CSG-v2.js'
 class RelojPendulo extends THREE.Object3D {
   constructor() { 
     super();
-    this.animacion = false;
-    this.materialNormal = new THREE.MeshNormalMaterial();
-    this.materialNormal.flatShading = true;
     this.mat_dorado = new THREE.MeshPhongMaterial({color: 0xFFD700 });
     this.reloj = new THREE.Clock();
 

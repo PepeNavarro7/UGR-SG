@@ -212,24 +212,23 @@ class MyScene extends THREE.Scene {
     this.cameraControl.target = look;//*/
   }
   
-   onDocumentMouseDown (event){ 
-     this.raton.x = (event.clientX/window.innerWidth) * 2-1;
-     this.raton.y = 1-2 * (event.clientY/window.innerHeight);
-     this.raycasterRaton.setFromCamera(this.raton,this.camera);
-     
-     if(this.reloj.compruebaPuzle() && this.estanteria.compruebaPuzle() && this.tresBombillas.compruebaPuzle()){
-	      var pickedObjets = this.raycasterRaton.intersectObjects(this.modelosInteractuablesConHabitacion, true);
-     } else{
-        var pickedObjets = this.raycasterRaton.intersectObjects(this.modelosInteractuables, true);
-     }
-     
-     if(pickedObjets.length > 0) {        
+  onDocumentMouseDown (event){ 
+    this.raton.x = (event.clientX/window.innerWidth) * 2-1;
+    this.raton.y = 1-2 * (event.clientY/window.innerHeight);
+    this.raycasterRaton.setFromCamera(this.raton,this.camera);
+    
+    if(this.reloj.compruebaPuzle() && this.estanteria.compruebaPuzle() && this.tresBombillas.compruebaPuzle()){
+      var pickedObjets = this.raycasterRaton.intersectObjects(this.modelosInteractuablesConHabitacion, true);
+    } else{
+      var pickedObjets = this.raycasterRaton.intersectObjects(this.modelosInteractuables, true);
+    }
+    
+    if(pickedObjets.length > 0) {        
       var objetoElegido = pickedObjets[0].object;
-      
       if(objetoElegido.userData){
         objetoElegido.userData.recibeClic(objetoElegido);
       }
-     }
+    }
   };
 
  onKeyDown = function (event){

@@ -40,7 +40,6 @@ class Maceta extends THREE.Object3D {
     }
 
     createBambu(){
-        const materialBambu = new THREE.MeshPhongMaterial({color: 'green'});        
         const v1 = new THREE.Vector3(-1.5, 6, -1);
         const v2 = new THREE.Vector3(1.5, 24, 1);
         const curve = new THREE.LineCurve3( v1, v2 );
