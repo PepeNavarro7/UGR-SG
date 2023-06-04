@@ -4,7 +4,7 @@ import * as OBJLOADER from '../libs/OBJLoader.js'
 import * as TWEEN from '../libs/tween.esm.js'
 import { CSG } from '../libs/CSG-v2.js'
 
-import { Palito } from './Palito.js'
+//import { Palito } from './Palito.js'
 
 class Libro extends THREE.Object3D {
   constructor() {

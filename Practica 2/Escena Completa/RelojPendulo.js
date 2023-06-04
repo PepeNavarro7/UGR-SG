@@ -77,19 +77,19 @@ class RelojPendulo extends THREE.Object3D {
   }
 
   animacionPendulo(){
-    var origen = { t: -Math.PI/10};
-    var fin = {t: Math.PI/10};
+    var origen = { t: -Math.PI/12};
+    var fin = {t: Math.PI/12};
     
     const tiempoDeRecorrido=1000;
 
     var animacion1 = new TWEEN.Tween (origen).to (fin, tiempoDeRecorrido)
       .onUpdate(() => { this.pendulo.rotation.z = origen.t; })
-      .onComplete(() => { origen.t = -Math.PI/10; })
+      .onComplete(() => { origen.t = -Math.PI/12; })
       .start();
 
     var animacion2 = new TWEEN.Tween (fin).to (origen, tiempoDeRecorrido)
       .onUpdate(() => { this.pendulo.rotation.z = fin.t; })
-      .onComplete(() => { fin.t = Math.PI/10; });
+      .onComplete(() => { fin.t = Math.PI/12; });
 
     animacion1.chain(animacion2);
     animacion2.chain(animacion1);

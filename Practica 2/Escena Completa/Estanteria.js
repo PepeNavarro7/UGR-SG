@@ -51,7 +51,7 @@ class Estanteria extends THREE.Object3D {
     csg_final.subtract ([balda2]); 
     
     this.techo = csg_final.toMesh();
-    this.techo.userData = this;
+   // this.techo.userData = this;
     this.add(this.techo);
     
 
